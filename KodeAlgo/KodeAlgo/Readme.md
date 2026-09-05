@@ -10,4 +10,12 @@ Binær søk krever sorterte data siden vi bruker sammenlingingsfunksjonalitet i 
 Logisk oppdeling av arrayet krever derfor sorterte data, hvis ikke blir det bare rot. 
 
 Kostnaden ved å sorterer først kan som regel forsvares om vi skal søke gjennom dataene flere ganger. 
-Har vi et lite dataset kan man vurdere å droppe sortering først. 
+Har vi et lite dataset kan man vurdere å droppe sortering først.
+
+# KI bruk
+Litt spørsmål rundt plassering av .gitignore fil.
+Videre spurte man om navngivning av tester.
+
+## Andre kilder
+https://www.youtube.com/watch?v=VXSqNCso3fA
+https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
