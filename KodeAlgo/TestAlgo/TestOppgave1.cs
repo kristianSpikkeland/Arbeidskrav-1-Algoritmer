@@ -34,6 +34,40 @@ namespace TestAlgo
         }
 
         [Fact]
+        public void LinearSearch_EmptyArray_ShouldThrowArgumentException()
+        {
+            // Arrange
+            var nums = new int[] {};
+
+            // Assert
+            Assert.Throws<ArgumentException>(() => Oppgave1.LinearSearch(nums, 7));
+
+        }
+
+        [Fact]
+        public void LinearSearch_OneElementInArray_ShouldThrowArgumentException()
+        {
+            // Arrange
+            var nums = new int[] { 5 };
+
+            // Assert
+            Assert.Throws<ArgumentException>(() => Oppgave1.LinearSearch(nums, 5));
+
+        }
+
+        [Fact]
+        public void LinearSearch_SameNumbers_ShouldReturnFirstIndex()
+        {
+            // Arrange
+            var nums = new int[] { 2, 5, 4, 4, 4, 4, 3 };
+
+            // Act
+            var result = Oppgave1.LinearSearch(nums, 4);
+
+            Assert.Equal(2, result);
+        }
+
+        [Fact]
         public void BinarySearch_Value13Exists_ShouldReturnIndex5()
         {
             // Arrange
@@ -57,6 +91,40 @@ namespace TestAlgo
 
             // Assert
             Assert.Equal(-1, result);
+        }
+
+        [Fact]
+        public void BinarySearch_EmptyArray_ShouldThrowArgumentException()
+        {
+            // Arrange
+            var nums = new int[] { };
+
+            // Assert
+            Assert.Throws<ArgumentException>(() => Oppgave1.BinaryReaderSearch(nums, 13));
+
+        }
+
+        [Fact]
+        public void BinarySearch_OneElementInArray_ShouldThrowArgumentException()
+        {
+            // Arrange
+            var nums = new int[] { 5 };
+
+            // Assert
+            Assert.Throws<ArgumentException>(() => Oppgave1.BinaryReaderSearch(nums, 5));
+
+        }
+
+        [Fact]
+        public void BinarySearch_SameNumbers_ShouldReturnFirstIndex()
+        {
+            // Arrange
+            var nums = new int[] { 2, 5, 4, 4, 4, 4, 3 };
+
+            // Act
+            var result = Oppgave1.BinaryReaderSearch(nums, 4);
+
+            Assert.Equal(2, result);
         }
     }
 }
