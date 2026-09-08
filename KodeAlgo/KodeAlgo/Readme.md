@@ -133,10 +133,66 @@ Men det er viktig å huske at binary krever sorterte data.
 ### Tester 
 Se eget testprosjekt.
 
+# Oppgave 3
+## Generelt
+Var vant med å skrive Quick sort metoden vist under timen med Ali.  
+Slet noen timer med å forsøke å skrive den om til å passe med parameterne som er gitt i oppgavetekst. Men fikk det aldri helt til. 
+Tok en titt på nettsiden https://www.geeksforgeeks.org/dsa/quick-sort-algorithm/ for å forstå bedre hva som var meningen.
+Lærte meg denne koden utenat og skrev en tilnærmet lik versjon som løsningsforslag. Brukte en litt ann metode for bytte.
+Samt at man droppet å skille ut swap som en egen funksjon.
+
+### Forklaringer
+Basissteget handler om at vi ønsker å legge dem tallene som er lavere enn pivotverdien til venstre for pivotindeksen 
+mens dem som er høyere legger vil til høyre for pivotverdien. 
+Pivotindeksen kan være hvilket som helst tall, men jeg valgte å sette pivotindeksen til det siste tallet. 
+Vi setter opp to pekere f.eks med navn i og j. i starter bak j i min kode.
+Videre settes det igang en for løkke med j som starter på parameteret low og kjører til pivotindeksen nås, men den tas ikke med. 
+Om verdien for j er lavere enn verdien for pivot, økes pekeren i med en og i verdien og j verdien bytter plass. 
+Dette sørger for at de tallene som er lavere enn pivot havner til venstre.
+Men verdien for pivot ligger feilplassert etter at løkken er kjørt.
+i +1 verdien er siste tall som er høyere en pivotverdien. Derfor bytter disse verdiene plass.
+Pivotverdien er nå det eneste tallet som er garantert riktig plassert etter at basissteget er kjørt.
+Pivotindeksen har jeg hentet ut i metoden Partition. 
+
+For at resten av tallene skal bli sortert kalles QuickSort rekrusivt. En metode som kaller seg selv kan kjøres uendelig.
+Derfor setter vi opp at hvis low er mindre eller lik high så kjøres rekrusjonen. 
+Dermed får en utgang i det low møter high etter hvert som arrayet blir mer og mer delt. 
+Vi henter ut indeksen og får kjørt sortering ved:
+
+```C#
+var partitionIndex = Partition(array, low, high);
+```
+
+QuickSort kalles da rekrusivt for de tallene som er lavere enn pivotverdien. 
+Deretter kaller QuickSort seg selv for de tallene som er høyere enn pivotverdien.
+Legg merke til at pivot verdien ikke er med i de rekrusive kallene.  
+Dette er greit å få til siden Partion metoden returnerer pivot indeksen.
+
+### Tidskompleksitet, plasskompleksitet
+Forventet tidskompleksitet for beste tilfelle samt gjennomsnitt er O (n log n). Verste tilfelle er 0 (n^2).
+QuickSort kan ikke garantere O (n log n) slik som merge sort kan. 
+
+I forhold til plasskompleksitet er verste tilfelle (n)
+I beste tilfelle er plasskompleksiteten O(log n)
+
+Kilde https://www.geeksforgeeks.org/dsa/time-and-space-complexity-analysis-of-quick-sort/
+
+### Fordeler, ulemper
+Jeg har forstått det slik at merge sort ble oppfunnet før QuickSort. Da er det litt rart at QuickSort har blitt så populær
+med dårligere garantert tidskompleksitet. Grunnet skal være at QuickSort har bedre plasskompleksitet. 
+
+Betydningen av inputdata har mye å si for QuickSort. Den liker ikke at ting er tilnærmet ferdig sortert og valg av pivot har mye å si.
+Vi vil ha en pivot som deler arrayet i to tilnærmet like store deler. 
+
+En ulempe med QuickSort er at den blir regnet som ustabil. Med det menes det at to like verdier kan få byttet sin plass med hverandre.
+Etter litt drøfting med KI kommer det fram at hvis verdiene er helt like gjør det ingenting. Men om to elementer med lik sorteringsnøkkel 
+bytter plass, spiller det fakrisk er rolle om elementene bører på mer informasjon enn nøkkelen (kilde Claude).
+
+QuickSort er vistnok bra for store data set, men dårlig for små. Kilde: https://www.geeksforgeeks.org/dsa/quick-sort-algorithm/
 
 
 # KI bruk
-
+## Oppgave 1
 Prompt:
 Har laget en metode som blant annet kaster ArgumentException om en liste er tom.
 Hvordan lager man en test som fanger opp at metoden skal kaste ArgumentException. 
@@ -196,11 +252,46 @@ while (i > 0 && array[i - 1] == target) i--;
 return i;
 ```
 
+## Oppgave 2
+
+
+### Bakgrunnsinformasjon
+Fikk også svar på hva som menes med lite API i oppgave2 da man ikke helt skjønte hva som var meningen. 
+Svaret var basicly å sette metodene som public.
+
+Var usikker på om Queue bare var for arrays, men fikk til svar at den er genric og også skal funke for linked lists.
 
 ## Generelt 
 Litt spørsmål rundt plassering av .gitignore fil.
 Videre spurte man om navngivning av tester.
+Spørsmål om å hente frem youtube videoer som bakgrunnsinformasjon før man begynte på oppgaven.
+Føler man lærer lite om man spinner i ring for lenge.
+
+## Oppgave 3
+
+Prompt:
+```C#
+void QuickSort(int[] array, int low, int high)
+```
+Hva er grunnen til int low og int high som parameter? Funksjonen funker utmerket uten. Kan det være for å avgrense søkeområdet? Svar veldig kort.
+
+
+Svar:
+Ja, nettopp. Quicksort er rekursiv og må sortere delområder av samme array. Uten low/high måtte du kopiert ut nye delarrays for hvert kall — dyrt og unødvendig. 
+Parameterne lar deg si «sorter kun fra indeks low til high» i den originale arrayen.
+
+Kaller du den kun én gang på hele arrayen, ser de overflødige ut — men de rekursive kallene inni funksjonen trenger dem.
+
 
 ## Andre kilder
+### Komme igang
 https://www.youtube.com/watch?v=VXSqNCso3fA
 https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
+
+### Oppgave 2
+https://www.youtube.com/watch?v=aNTDJ9bnRU4
+
+### Oppgave 3
+https://www.youtube.com/watch?v=MZaf_9IZCrc
+https://www.geeksforgeeks.org/dsa/time-and-space-complexity-analysis-of-quick-sort/
+https://www.geeksforgeeks.org/dsa/quick-sort-algorithm/
