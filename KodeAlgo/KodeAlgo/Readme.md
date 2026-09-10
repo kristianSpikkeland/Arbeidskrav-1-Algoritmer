@@ -133,6 +133,12 @@ Men det er viktig å huske at binary krever sorterte data.
 ### Tester 
 Se eget testprosjekt.
 
+# Oppgave 2
+
+Slet en del med å komme igang med oppgaven. Valgte å se på C# implementasjonen av Queue. 
+Fant dermed et fint oppsettet for å få satt opp arrayet.
+Neste utfordring skjedde når man skulle forsøke å appende til det tomme arrayet. 
+
 # Oppgave 3
 ## Generelt
 Var vant med å skrive Quick sort metoden vist under timen med Ali.  
@@ -155,7 +161,7 @@ Pivotverdien er nå det eneste tallet som er garantert riktig plassert etter at 
 Pivotindeksen har jeg hentet ut i metoden Partition. 
 
 For at resten av tallene skal bli sortert kalles QuickSort rekrusivt. En metode som kaller seg selv kan kjøres uendelig.
-Derfor setter vi opp at hvis low er mindre eller lik high så kjøres rekrusjonen. 
+Derfor setter vi opp at hvis low er mindre enn high så kjøres rekrusjonen. 
 Dermed får en utgang i det low møter high etter hvert som arrayet blir mer og mer delt. 
 Vi henter ut indeksen og får kjørt sortering ved:
 
@@ -190,6 +196,11 @@ bytter plass, spiller det fakrisk er rolle om elementene bører på mer informas
 
 QuickSort er vistnok bra for store data set, men dårlig for små. Kilde: https://www.geeksforgeeks.org/dsa/quick-sort-algorithm/
 
+# Oppgave 4
+Jeg begynte først med å tegne opp grafen for å ha en ryddig oversikt:
+![Bilde graf](./Oppgave4/BildeGraf.png)
+
+Bygget så en ferdig naboliste og traverserte denne. 
 
 # KI bruk
 ## Oppgave 1
@@ -255,17 +266,41 @@ return i;
 ## Oppgave 2
 
 
+Prompt: 
+Sliter litt med at jeg skal appende til et tomt array i C#. 
+Forklar veldig kort hvordan dette kan gjøres. 
+Lages det en kopi av arrayet med append så man må tenke annerledes?
+
+Svar: 
+Kort svar: ja, arrays i C# har fast størrelse. Du kan aldri legge til et element — du lager et nytt, større array og kopierer over. .
+Append() fra LINQ ser ut som appending, men den returnerer bare en lat IEnumerable<int>; originalen er urørt, og du må kalle .ToArray() for å materialisere den. 
+Det er en kopi hver gang.
+
+```C#
+int[] arr = Array.Empty<int>();
+arr = arr.Append(5).ToArray();        // LINQ — ny allokering hver gang
+Array.Resize(ref arr, arr.Length + 1); // kopierer også, bare mer eksplisitt
+arr[^1] = 7;
+```
+Begge er O(n) per element, så i en løkke blir det O(n²). Bruk List<int> i stedet — den vokser amortisert O(1) ved å doble en intern buffer:
+
+```C#
+var list = new List<int>();
+list.Add(5);
+list.Add(7);
+int[] result = list.ToArray();  // konverter til slutt hvis du må ha array
+```
+
+Tommelfingerregel: kjenner du størrelsen på forhånd, bruk array. Vokser den underveis, bruk List<T>.
+
+
+
 ### Bakgrunnsinformasjon
 Fikk også svar på hva som menes med lite API i oppgave2 da man ikke helt skjønte hva som var meningen. 
 Svaret var basicly å sette metodene som public.
 
 Var usikker på om Queue bare var for arrays, men fikk til svar at den er genric og også skal funke for linked lists.
 
-## Generelt 
-Litt spørsmål rundt plassering av .gitignore fil.
-Videre spurte man om navngivning av tester.
-Spørsmål om å hente frem youtube videoer som bakgrunnsinformasjon før man begynte på oppgaven.
-Føler man lærer lite om man spinner i ring for lenge.
 
 ## Oppgave 3
 
@@ -281,6 +316,60 @@ Ja, nettopp. Quicksort er rekursiv og må sortere delområder av samme array. Ut
 Parameterne lar deg si «sorter kun fra indeks low til high» i den originale arrayen.
 
 Kaller du den kun én gang på hele arrayen, ser de overflødige ut — men de rekursive kallene inni funksjonen trenger dem.
+
+Ellers en del drodling med KI for å skjønne QuickSort koden jeg fant på geeksforgeeks sine sider skikkelig. 
+
+## Oppgave 4
+Prompt: 
+Holder på med BFS for en graf med et endepunkt uten naboer. Får KeyNotFoundException for endepunktet. 
+Hvordan kan man unngå det. Svar veldig kort.
+
+Svar: 
+Bruk TryGetValue i stedet for indekseringsoperatoren:
+```C#
+if (graph.TryGetValue(node, out var naboer))
+{
+    foreach (var n in naboer) { /* ... */ }
+}
+```
+Alternativt: sørg for at hver node får en tom liste når du bygger grafen, så finnes nøkkelen alltid. 
+Det er som regel den reneste løsningen.
+
+Slet veldig med med: 
+"Implementer void AddConnection(string stationA, string stationB)". 
+Etter å ha holdt på noen timer med å prøve å forstå hvordan det skulle angripes, fant jeg ut at jeg hadde noen kunnskapshull
+knyttet til hvordan man lager toveisforbindelse mellom to noder samt hvordan man finner korteste vei mellom to noder. 
+Videre så jeg videre på oppgave 5 der man skal undersøke om det finnes en rute mellom to noder og oppdage syklus i urettede graf.
+Hadde ingen erfaring med dette. Kunne kun traversering av grafer.
+Har tidligere god erfaring å la Claude lage pedagogisk opplegg til meg så jeg promptet:
+
+Prompt:
+Lag et pedagogisk opplegg som lærer meg følgende om grafer i c#:
+
+For BFS
+* Hvordan man kan legge til toveisforbindelse mellom to noder med metode:  void AddConnection(string nodeA, string nodeB).
+* Finner korteste vei mellom to noder.
+
+For DFS
+* Undersøke om det finnes en rute mellom to noder
+* Oppdage syklus i urettede graf
+
+Lag pedagogsike forlaringer og kode som er puggbar slik at alle konseptene sitter.
+Kan traversering fra før av. Lag PDF.
+
+Brukte deretter KI en del for å utdype forkllaringene i PDFen.
+
+Svar:
+Se vedlagt PDF
+
+Litt spørsmål rundt markdown og innliming av bilde. Jeg hadde mellomrom i bildenavnet som skapte litt trøbbel. 
+Fikk også repetert hvordan man lager kulepunkt med * 
+
+## Generelt 
+Litt spørsmål rundt plassering av .gitignore fil.
+Videre spurte man om navngivning av tester.
+Spørsmål om å hente frem youtube videoer som bakgrunnsinformasjon før man begynte på oppgaven.
+Føler man lærer lite om man spinner i ring for lenge.
 
 
 ## Andre kilder
