@@ -8,12 +8,12 @@ namespace KodeAlgo
     {
         public static void QuickSort(int[] array, int low, int high)
         {
-            if (low <= high)
+            if (low < high)
             {
-                var partitionIndex = Partition(array, low, high);
+                var sortedPivotIndex = Partition(array, low, high);
 
-                QuickSort(array, low, partitionIndex - 1);
-                QuickSort(array, partitionIndex + 1, high); 
+                QuickSort(array, low, sortedPivotIndex - 1);
+                QuickSort(array, sortedPivotIndex + 1, high); 
             }
                         
             
@@ -22,12 +22,12 @@ namespace KodeAlgo
 
         public static int Partition(int[] array, int low, int high)
         {
-            int pivot = high;
+            int pivotIndex = high;
             int i = low - 1;
 
-            for (int j = low; j < pivot; j++)
+            for (int j = low; j < pivotIndex; j++)
             {
-                if (array[j] < array[pivot])
+                if (array[j] < array[pivotIndex])
                 {
                     i++;
                     (array[j], array[i]) = (array[i], array[j]);
@@ -35,7 +35,7 @@ namespace KodeAlgo
                 }
             }
 
-            (array[pivot], array[i + 1]) = (array[i + 1], array[pivot]);
+            (array[pivotIndex], array[i + 1]) = (array[i + 1], array[pivotIndex]);
 
             return i + 1;
          
