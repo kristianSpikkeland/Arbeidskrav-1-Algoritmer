@@ -30,14 +30,12 @@ namespace KodeAlgo.Oppgave4
         {
             if (_adj.TryGetValue(node, out var list))
             {
-                Console.WriteLine(string.Join(", ", list));
                 return list;
             }
-            return Array.Empty<string>();
-            
+            return new List<string> { };
         }
 
-        
+
 
         public static List<string> TraverseBFS(Dictionary<string, List<string>> graph, string start)
         {
@@ -92,7 +90,65 @@ namespace KodeAlgo.Oppgave4
             Console.WriteLine(string.Join(", ", order));
         }
 
+        public List<string> GetShortestPath(string start, string goal)
+        {
+            var visited = new HashSet<string>() { start };
+            var parent = new Dictionary<string, string>();
+            var queue = new Queue<string>();
 
+            queue.Enqueue(start);
+
+            while (queue.Count > 0)
+            {
+                var node = queue.Dequeue();
+                visited.Add(node);
+
+                if (node == goal)
+                {
+                    // Når noden vi har tatt ut er lik målet vårt (node 2)
+                    // Bygger vi og returnerer en liste bakover med med metoden GoBack()
+                    return GoBack(start, goal, parent);
+                }
+
+                foreach (var neighbor in Neighbors(node))
+                {
+                    if (!visited.Contains(neighbor))
+                    {
+                        // Nodebarn legges som nøkkel, forelder som verdi
+                        parent[neighbor] = node;
+                        visited.Add(neighbor);
+                        queue.Enqueue(neighbor);
+                    }
+                }
+            }
+            return new List<string> { };
+        }
+
+        public List<string> GoBack(string start, string goal, Dictionary<string, string> parent)
+        {
+            var order = new List<string>();
+
+            // Omgjøring av navn for mer pedagogisk variabelnavn 
+            string node = goal;
+
+            // Vi rygger bakover
+            while (node != start)
+            {
+                order.Add(node);
+
+                // Flytter et steg bakover til forelderen til noden
+                // Hvert barn har bare en forelder
+                node = parent[node];
+            }
+
+            // Start legges til slutten av listen
+            order.Add(start);
+
+            // Listen reverseres for å få riktig rekkefølge
+            order.Reverse();
+
+            return order;
+        }
 
         // Metode ikke i bruk. Brukt for å teste traversering.
         public Dictionary<string, List<string>> BuildTestGraph()
