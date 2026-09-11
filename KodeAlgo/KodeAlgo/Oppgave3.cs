@@ -8,6 +8,18 @@ namespace KodeAlgo
     {
         public static void QuickSort(int[] array, int low, int high)
         {
+            if (array.Length == 0)
+            {
+                Console.WriteLine("Array is empty");
+                return;
+            }
+
+            if (array.Length == 1)
+            {
+                Console.WriteLine("Arrray only contains 1 element");
+                return;
+            }
+
             if (low < high)
             {
                 var sortedPivotIndex = Partition(array, low, high);
