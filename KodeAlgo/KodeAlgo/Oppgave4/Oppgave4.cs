@@ -9,9 +9,7 @@ namespace KodeAlgo.Oppgave4
     {
         public Dictionary<string, List<string>> _adj = new();
 
-        public IEnumerable<string> Nodes => _adj.Keys;
-
-      
+        public IEnumerable<string> Nodes => _adj.Keys;    
 
         public void AddNode(string node)
         {
@@ -37,7 +35,7 @@ namespace KodeAlgo.Oppgave4
 
 
 
-        public static List<string> TraverseBFS(Dictionary<string, List<string>> graph, string start)
+        public List<string> TraverseBFS(Dictionary<string, List<string>> graph, string start)
         {
             var visited = new HashSet<string>() { start };
             var order = new List<string>();
@@ -68,28 +66,6 @@ namespace KodeAlgo.Oppgave4
         }
 
 
-
-        public void BuildTraverseGraph()
-        {
-            
-            var graph = new BFSGraph();
-            graph.AddConnection("Majorstuen", "Nationaltheatret");
-            graph.AddConnection("Nationaltheatret", "Stortinget");
-            graph.AddConnection("Stortinget", "Jernbanetorget");
-            graph.AddConnection("Jernbanetorget", "Grønland");
-            graph.AddConnection("Grønland", "Tøyen");
-            graph.AddConnection("Majorstuen", "Blindern");
-            graph.AddConnection("Blindern", "Forskningsparken");
-            graph.AddConnection("Forskningsparken", "Ullevål stadion");
-
-            // graph._adj og ikke kun adj da det kun vil medføre en tom liste
-            var order = TraverseBFS(graph._adj, "Majorstuen");
-
-
-            
-            Console.WriteLine(string.Join(", ", order));
-        }
-
         public List<string> GetShortestPath(string start, string goal)
         {
             var visited = new HashSet<string>() { start };
@@ -115,7 +91,9 @@ namespace KodeAlgo.Oppgave4
                     if (!visited.Contains(neighbor))
                     {
                         // Nodebarn legges som nøkkel, forelder som verdi
+                        // En foreldre (node) kan ha flere barn (neighbors)
                         parent[neighbor] = node;
+
                         visited.Add(neighbor);
                         queue.Enqueue(neighbor);
                     }
@@ -149,6 +127,10 @@ namespace KodeAlgo.Oppgave4
 
             return order;
         }
+
+
+
+
 
         // Metode ikke i bruk. Brukt for å teste traversering.
         public Dictionary<string, List<string>> BuildTestGraph()
