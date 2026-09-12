@@ -148,7 +148,7 @@ Lærte meg denne koden utenat og skrev en tilnærmet lik versjon som løsningsfo
 Samt at man droppet å skille ut swap som en egen funksjon.
 
 ### Forklaringer
-Basissteget handler om at vi ønsker å legge dem tallene som er lavere enn pivotverdien til venstre for pivotindeksen 
+QuickSort handler om at vi ønsker å legge dem tallene som er lavere enn pivotverdien til venstre for pivotindeksen 
 mens dem som er høyere legger vil til høyre for pivotverdien. 
 Pivotindeksen kan være hvilket som helst tall, men jeg valgte å sette pivotindeksen til det siste tallet. 
 Vi setter opp to pekere f.eks med navn i og j. i starter bak j i min kode.
@@ -161,15 +161,15 @@ Pivotverdien er nå det eneste tallet som er garantert riktig plassert etter at 
 Pivotindeksen har jeg hentet ut i metoden Partition. 
 
 For at resten av tallene skal bli sortert kalles QuickSort rekrusivt. En metode som kaller seg selv kan kjøres uendelig.
-Derfor setter vi opp at hvis low er mindre enn high så kjøres rekrusjonen. 
+Derfor setter vi opp at hvis low er mindre enn high så kjøres rekrusjonen. Det er dette som er basissteget. 
 Dermed får en utgang i det low møter high etter hvert som arrayet blir mer og mer delt. 
-Vi henter ut indeksen og får kjørt sortering ved:
+Vi henter ut indeksen ved:
 
 ```C#
-var partitionIndex = Partition(array, low, high);
+var sortedPivotIndex = Partition(array, low, high);
 ```
 
-QuickSort kalles da rekrusivt for de tallene som er lavere enn pivotverdien. 
+QuickSort kalles så rekrusivt for de tallene som er lavere enn pivotverdien. 
 Deretter kaller QuickSort seg selv for de tallene som er høyere enn pivotverdien.
 Legg merke til at pivot verdien ikke er med i de rekrusive kallene.  
 Dette er greit å få til siden Partion metoden returnerer pivot indeksen.
@@ -192,7 +192,7 @@ Vi vil ha en pivot som deler arrayet i to tilnærmet like store deler.
 
 En ulempe med QuickSort er at den blir regnet som ustabil. Med det menes det at to like verdier kan få byttet sin plass med hverandre.
 Etter litt drøfting med KI kommer det fram at hvis verdiene er helt like gjør det ingenting. Men om to elementer med lik sorteringsnøkkel 
-bytter plass, spiller det fakrisk er rolle om elementene bører på mer informasjon enn nøkkelen (kilde Claude).
+bytter plass, spiller det faktisk er rolle om elementene bører på mer informasjon enn nøkkelen (kilde Claude).
 
 QuickSort er vistnok bra for store data set, men dårlig for små. Kilde: https://www.geeksforgeeks.org/dsa/quick-sort-algorithm/
 
@@ -200,7 +200,26 @@ QuickSort er vistnok bra for store data set, men dårlig for små. Kilde: https:
 Jeg begynte først med å tegne opp grafen for å ha en ryddig oversikt:
 ![Bilde graf](./Oppgave4/BildeGraf.png)
 
-Bygget så en ferdig naboliste og traverserte denne. 
+Bygget så en ferdig naboliste og traverserte denne.
+Slet en del med resten av oppgaven før det løsnet. Se KI bruk.
+
+## Forklaringer
+### Tidskompleksiteten O(V + E)
+Tidskompleksiteten O(V + E) gjelder for traversing av nabo liste (adjacency list) med BFS. 
+V står for vertices(nodene) mens E står for edges (kanter).
+
+Vi får O(V + E) siden:
+* O(V): hver node er besøkt en gang
+* O(E): hver nabo ligger på en kant og blir besøkt en gang
+* Kombinert gir det O(V+E)
+
+### FIFO rekkefølge korteste antall stopp
+FIFO står for Fist In First Out og er et kjennetegn for BFS grafer.
+FIFO rekkefølge gir korteste vei siden vi alltid besøker dem nærmeste nodene først under traverseringen.
+Eller sakt på en annen måte: noder bahandles nivå for nivå og vi kan dermed finne den stien med færrest antell kanter mellom start - og målnode. 
+
+# Oppgave 5
+
 
 # KI bruk
 ## Oppgave 1
@@ -317,7 +336,8 @@ Parameterne lar deg si «sorter kun fra indeks low til high» i den originale ar
 
 Kaller du den kun én gang på hele arrayen, ser de overflødige ut — men de rekursive kallene inni funksjonen trenger dem.
 
-Ellers en del drodling med KI for å skjønne QuickSort koden jeg fant på geeksforgeeks sine sider skikkelig. 
+Ellers en del drodling med KI for å skjønne QuickSort koden jeg fant på geeksforgeeks sine sider skikkelig.
+Basissteg var et nytt begrep for min del. Fikk det forklart på en grei måte av KI.
 
 ## Oppgave 4
 Prompt: 
@@ -365,11 +385,86 @@ Se vedlagt PDF
 Litt spørsmål rundt markdown og innliming av bilde. Jeg hadde mellomrom i bildenavnet som skapte litt trøbbel. 
 Fikk også repetert hvordan man lager kulepunkt med * 
 
+# Oppgave 5
+Hadde glemt litt bort traversering med DFS. Gikk derfor tilbake å så på et puggeark jeg har jobbet med i sommer.
+Legger ved puggearket med nav bfs-dfs puggeark som vedlegg.
+Etter litt prompting frem og tilbake viste det seg at den iterative varianten i puggearket returnerte feil DFS rekkefølge.
+Puggearket mitt hadde for mye fokus rundt å gjøre BFS og DFS mest mulig lik, 
+men klarte ikke å ta hensyn til at DFS er mer sårbar for når besøkt settes.
+Problemet var at naboene ble markert som visited for tidlig.
+
+En del spørsmål frem og tilbake med KI rundt DFS og om det finnes en vei.
+Syntes koden jeg tidligere hadde fått av KI (se vedlegg) virket litt tungvint. 
+
+Stusset på linjen: 
+```if (!visited.Add(current)) continue```
+
+Den virket litt ueffektiv.
+
+Etter litt frem og tilbake med spørsmål fikk jeg denne koden av Claude som har fjernet denne duplikatsjekken:
+
+```C#
+public bool HasPath(string start, string goal)
+{
+    var stack   = new Stack<string>();
+    var visited = new HashSet<string> { start };   // ◄ A: start markert med én gang
+    stack.Push(start);
+
+    while (stack.Count > 0)
+    {
+        var current = stack.Pop();
+        if (current.Equals(goal)) return true;
+                                                   // ◄ B: ingen guard her
+        foreach (var neighbor in Neighbors(current))
+            if (visited.Add(neighbor))             // ◄ C: markerer OG sjekker
+                stack.Push(neighbor);
+    }
+    return false;
+}
+```
+
+Claude kaller den for mark on push.
+Men får forklart av Claude at Mark on push bare egner som om rekkefølgen ikke spiller noen rolle.
+
+Videre får man forklart at for riktig sortering og syklusdeteksjon må vi ha den guarden/dulikatsjekken.
+Da må vi ha Mark on pop som Claude kaller det og begynne med tom visited liste.
+
+
+Bilde under viser mark on pop:
+
+```C#
+public List<string> IterativeDFS(string start, Dictionary<string, List<string>> graph)
+{
+    var stack = new Stack<string>();
+    stack.Push(start);
+
+    var visited = new HashSet<string>();
+    var order = new List<string>();
+
+    while (stack.Count > 0)
+    {
+        var node = stack.Pop();
+        if (!visited.Add(node)) continue;
+        order.Add(node);
+
+        foreach (var neighbor in graph[node].OrderBy(n => n))
+            if (!visited.Contains(neighbor))
+                stack.Push(neighbor);
+    }
+    return order;
+}
+```
+
+Litt spørsmål rundt om det er vanlig at det er vanlig om rekrusiv og iterativ DFS returnerer forskjellig rekkefølge.
+Fikk til svar at om jeg ville ha stigende (ABC) så skal jeg har OrderBy i den rekrusive og OrderByDecending i den iterative.
+
 ## Generelt 
 Litt spørsmål rundt plassering av .gitignore fil.
 Videre spurte man om navngivning av tester.
 Spørsmål om å hente frem youtube videoer som bakgrunnsinformasjon før man begynte på oppgaven.
 Føler man lærer lite om man spinner i ring for lenge.
+Videre har man brukt KI noe for å sjekke logiske feil samt enkel debugging.
+
 
 
 ## Andre kilder
@@ -384,3 +479,6 @@ https://www.youtube.com/watch?v=aNTDJ9bnRU4
 https://www.youtube.com/watch?v=MZaf_9IZCrc
 https://www.geeksforgeeks.org/dsa/time-and-space-complexity-analysis-of-quick-sort/
 https://www.geeksforgeeks.org/dsa/quick-sort-algorithm/
+
+### Oppgave 4
+https://singhajit.com/data-structures/graph/
