@@ -27,21 +27,38 @@ namespace KodeAlgo.Menu
             _bfsGraph.AddConnection("Forskningsparken", "Ullevål stadion");     
         }
 
-        public void TraverseFromMajorstuen()
+
+        // BFS
+        public void BFSTraverseFromMajorstuen()
         {
+            Console.WriteLine("Traversing graph with start node Majorstuen...");
             var order = _bfsGraph.TraverseBFS(_bfsGraph._adj, "Majorstuen");
             Console.WriteLine(string.Join(", ", order));
-        }
-
-        public void ShortestPathMajorstuenGrønland()
-        {
-            var shortestPath = _bfsGraph.GetShortestPath("Majorstuen", "Grønland");
-
-            Console.WriteLine(string.Join(", ", shortestPath));
-            Console.WriteLine($"Shortest number of stops is {shortestPath.Count - 1}");
             Console.WriteLine();
         }
 
-        
+        // BFS
+        public void ShortestPathMajorstuenGrønland()
+        {
+            Console.WriteLine("Calculating number of stops from Majorstuen to Grønland...");
+
+            var shortestPath = _bfsGraph.GetShortestPath("Majorstuen", "Grønland");
+
+            Console.WriteLine($"Shortest number of stops between Majorstuen and Grønland is {shortestPath} stops.");
+            Console.WriteLine();
+        }
+
+        // BFS
+        public void ShortestPathUllevålTøyen()
+        {
+            Console.WriteLine("Calculating number of stops from Ullevål stadion to Tøyen...");
+
+            var shortestPath = _bfsGraph.GetShortestPath("Ullevål stadion", "Tøyen");
+
+            Console.WriteLine($"Shortest number of stops between Ullevål and Tøyen is {shortestPath} stops.");
+            Console.WriteLine();
+        }
+
+
     }
 }
