@@ -7,29 +7,43 @@ namespace KodeAlgo.Oppgave4
 {
     public class BFSGraph
     {
+        // Egenskaper
+
         public Dictionary<string, List<string>> _adj = new();
 
-        public IEnumerable<string> Nodes => _adj.Keys;    
+        public IEnumerable<string> Nodes => _adj.Keys;
 
         public void AddNode(string node)
         {
             _adj.TryAdd(node, new List<string>());
         }
 
+
+        // Metoder
+
+        // Metode for å binde to noder til hveranre i en urettet graf
         public void AddConnection(string nodeA, string nodeB)
         {
+            // Legger til nodene som keys
             AddNode(nodeA);
             AddNode(nodeB);
+
+            // Node B legges til node A sin naboliste
             _adj[nodeA].Add(nodeB);
+
+            // Node A legges til node B sin naboliste
             _adj[nodeB].Add(nodeA);
         }
 
+
+        // Metode for å returnere naboliste for en node
         public IReadOnlyList<string> Neighbors(string node)
         {
             if (_adj.TryGetValue(node, out var list))
             {
                 return list;
             }
+            // Om node ikke finnes returneres tom liste
             return new List<string> { };
         }
 
@@ -47,6 +61,7 @@ namespace KodeAlgo.Oppgave4
             {
                 var node = queue.Dequeue();
                 order.Add(node);
+
 
                 if (graph.TryGetValue(node, out var neighbors))
                 {
@@ -66,8 +81,13 @@ namespace KodeAlgo.Oppgave4
         }
 
 
-        public List<string> GetShortestPath(string start, string goal)
+        public int GetShortestPath(string start, string goal)
         {
+            if (start == goal)
+            {
+                throw new ArgumentException("Start and end node must be diffrent");
+            }
+
             var visited = new HashSet<string>() { start };
             var parent = new Dictionary<string, string>();
             var queue = new Queue<string>();
@@ -82,8 +102,11 @@ namespace KodeAlgo.Oppgave4
                 if (node == goal)
                 {
                     // Når noden vi har tatt ut er lik målet vårt (node 2)
-                    // Bygger vi og returnerer en liste bakover med med metoden GoBack()
-                    return GoBack(start, goal, parent);
+                    // Bygger vi en liste bakover med med metoden GoBack()
+                    var pathList = GoBack(start, goal, parent);
+
+                    // Vi returnerer antallet elementer i listen - 1 for å få nodeavstanden
+                    return pathList.Count() - 1;
                 }
 
                 foreach (var neighbor in Neighbors(node))
@@ -99,7 +122,8 @@ namespace KodeAlgo.Oppgave4
                     }
                 }
             }
-            return new List<string> { };
+            // Returnerer 0 om goal aldri blir funnet. Det er i så fall ingen sti mellom nodene.
+            return 0;
         }
 
         public List<string> GoBack(string start, string goal, Dictionary<string, string> parent)
