@@ -37,7 +37,9 @@ class Program
 
                 case 2:
                     {
-                        Console.WriteLine("Not implemented yet");
+                        Console.WriteLine("A queue with integers has been created");
+                        Console.WriteLine();
+                        MenuOppgave2.QueueMenu();
                         break;
                     }
 
