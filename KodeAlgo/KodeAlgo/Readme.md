@@ -710,7 +710,7 @@ Slet en del med resten av oppgaven før det løsnet. Se KI bruk.
 
 ## Forklaringer
 ### Tidskompleksiteten O(V + E)
-Tidskompleksiteten O(V + E) gjelder for traversing av nabo liste (adjacency list) med BFS. 
+Tidskompleksiteten O(V + E) gjelder blant for traversing av nabo liste (adjacency list) med BFS. 
 V står for vertices(nodene) mens E står for edges (kanter).
 
 Vi får O(V + E) siden:
@@ -724,6 +724,72 @@ FIFO rekkefølge gir korteste vei siden vi alltid besøker dem nærmeste nodene 
 Eller sakt på en annen måte: noder bahandles nivå for nivå og vi kan dermed finne den stien med færrest antell kanter mellom start - og målnode. 
 
 # Oppgave 5
+## Forklaringer
+### Basissteg og rekrusivt steg (rekrusiv variant)
+
+Basisteget er foreach løkken som leter gjennom naboene samt sjekken om naboen er besøkt. Det finnes ikke et uendelig antall nabooer.
+OrderBy sørger for at naboene blir alfabetisk sortert.
+
+
+```C#
+foreach (var neighbor in graph[node].OrderBy(n => n))
+{
+                    
+    if (!visited.Contains(neighbor))
+```
+
+Det rekrusive steget er:
+
+```C#
+Dfs(neighbor);
+```
+som fører til at følgende:
+
+```C#
+
+visited.Add(node);
+order.Add(node);
+
+                
+foreach (var neighbor in graph[node].OrderBy(n => n))
+{
+    // Hvis neigbor ikke finnes i visited
+    if (!visited.Contains(neighbor))
+    {
+        // Blir neighbor ny node som prosesseres med Dfs metoden
+        Dfs(neighbor);
+    }
+}
+```
+Neighbor har blitt til node og rekrusjonen kjøres helt til det ikke er flere naboer i grafen å besøke.
+
+I koden finnes ingen return for basisteget. Men når alle naboer er besøkt vil ikke DFS(neighbor) kjøres mer og vi når slutten av koden.
+
+### Tidskompleksiteten O(V + E)
+Tidskompleksiteten O(V + E) gjelder også for traversing av nabo liste (adjacency list) med DFS. 
+V står for vertices(nodene) mens E står for edges (kanter).
+
+Vi får O(V + E) siden:
+* O(V): hver node er besøkt en gang
+* O(E): hver nabo ligger på en kant og blir besøkt en gang
+* Kombinert gir det O(V+E)
+
+### Forskjell rekursiv og iterativ DFS
+Med iterativ DFS har man mer kontroll enn med den rekrusive varianten. Den rekrusive varianten kan lage stack overflow om grafen er svært dyp.
+Det vil si at stacken blir full og programmet krasjer.
+Den iterative varianten ligner mer på BFS enn den rekrusive. 
+Om man ikke tar et aktivt valg om å snu besøktrekkefølge, vil de to variantene returnere forskjellig rekkefølge men allikevell være gyldige. 
+
+### Sammenligning BFS, DFS
+BFS bruker kø mens DFS bruker stack.
+Man kan si at BFS bruker FIFO (first in first out) mens DFS bruker LIFO(last in last out).
+DFS står for depth first search som vil si at DFS går i dybden først. BFS står for breadth first search som vil si at BFS går i bredden først.
+Iterativ DFS ligner veldig på BFS og ved bytte fra BFS kø til stack har vi faktisk DFS.
+BFS passer for å finne korteste vei i uvektet graf.
+DFS passer for å utforske sykler og for å finne vei fra start til mål i labyrinter. 
+BFS sin minnebruk sliter ved brede grafer mens DFS sliter ved dype grafer. Begge har O(n) plasskompleksitet. 
+
+
 
 
 # KI bruk
@@ -972,6 +1038,7 @@ Videre har man brukt KI noe for å sjekke logiske feil samt enkel debugging.
 Noen spøsrmål knyttet til oversetting fra norsk til engelsk.
 Litt kodeforklaringer knyttet til Youtube videoer jeg har sett.
 Fikk forklart en del rundt plasskompleksitet. Samt forksjellen mellom tid- og plasskompleksitet.
+Videre fikk man forklart hva basisteg og rekrusivt steg er og hva forskjellen er mellom dem.
 
 
 
