@@ -44,5 +44,15 @@ namespace KodeAlgo.Menu
             Console.WriteLine(string.Join(", ", order));
             Console.WriteLine();
         }
+
+        // DFS Isolated node
+        public void DFSTraverseIncludingIsolatedNode()
+        {
+            _dfsGraph.AddNode("NewNode");
+            Console.WriteLine("Recursivly traversing graph including isolated node...");
+            var order = _dfsGraph.TraverseAll();
+            Console.WriteLine(string.Join(", ", order));
+            Console.WriteLine();
+        }
     }
 }
