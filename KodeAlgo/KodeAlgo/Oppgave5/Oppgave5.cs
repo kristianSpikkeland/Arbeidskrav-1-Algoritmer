@@ -77,6 +77,7 @@ namespace KodeAlgo.Oppgave5
         }
 
 
+
         // Metode som bruker traverserer graf iterativt ved hjelp av stack
         public List<string> TraverseIterativeDFS(Dictionary<string, List<string>> graph, string start)
         {
@@ -113,6 +114,8 @@ namespace KodeAlgo.Oppgave5
             }
             return order;
         }
+
+
 
 
         // Mark on push variant
@@ -152,6 +155,36 @@ namespace KodeAlgo.Oppgave5
             return false;
 
 
+        }
+
+
+        // Metodene TraversAll og DFS brukes for å traversere isolerte noder 
+        public List<string> TraverseAll()
+        {
+            var order = new List<string>();
+            var visited = new HashSet<string>();
+
+            // Ytre løkke fanger isolerte
+            foreach (string node in Nodes)     
+            {
+                if (!visited.Contains(node))
+                {
+                    DFS(node, visited, order);                    
+                }
+            }
+            return order;
+        }
+
+        private void DFS(string node, HashSet<string> visited, List<string> order)
+        {
+            visited.Add(node);
+            order.Add(node);
+
+            foreach (string neighbor in _adj[node])
+            {
+                if (!visited.Contains(neighbor))
+                    DFS(neighbor, visited, order);
+            }
         }
     }
 }
