@@ -1,6 +1,7 @@
 ﻿using KodeAlgo;
 using KodeAlgo.Helpers;
 using KodeAlgo.Menu;
+using KodeAlgo.Oppgave1;
 using KodeAlgo.Oppgave2;
 using KodeAlgo.Oppgave4;
 using KodeAlgo.Oppgave5;
@@ -37,7 +38,7 @@ class Program
 
                 case 2:
                     {
-                        Console.WriteLine("A queue with integers has been created");
+                        Console.WriteLine("A queue with integers has been created with 5 start slots");
                         Console.WriteLine();
                         MenuOppgave2.QueueMenu();
                         break;
@@ -72,7 +73,9 @@ class Program
                         menuOppgave5.DFSTraverseRecursiveFromMajorstuen();
                         menuOppgave5.DFSTraverseIterativeFromMajorstuen();
                         var isPath = DFS.TryFindPath("Majorstuen", "Tøyn");
-                        Console.WriteLine(isPath);
+                        Console.WriteLine("There is noe path between Majorstuen and Tøyen. Ispath = "+isPath);
+                        Console.WriteLine();
+                        menuOppgave5.DFSTraverseIncludingIsolatedNode();
 
 
                         break;
