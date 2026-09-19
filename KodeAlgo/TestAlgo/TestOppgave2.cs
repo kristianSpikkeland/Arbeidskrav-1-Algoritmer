@@ -26,16 +26,16 @@ namespace TestAlgo
         public void Enqueue_AddingElementToFullArray_ShouldExpandArray()
         {
             // Arrange
-            // Creates a queue with 5 slots in array
-            var queue = new CustomQueue<int>(5);
+                // Creates a queue with 5 slots in array
+                var queue = new CustomQueue<int>(5);
 
             // Act
-            // Adding 5 elements
-            queue.Enqueue(3);
-            queue.Enqueue(7);
-            queue.Enqueue(4);
-            queue.Enqueue(6);
-            queue.Enqueue(2);
+                // Adding 5 elements
+                queue.Enqueue(3);
+                queue.Enqueue(7);
+                queue.Enqueue(4);
+                queue.Enqueue(6);
+                queue.Enqueue(2);
 
             // Adding element number 6 should double array  
             queue.Enqueue(9);
@@ -48,16 +48,16 @@ namespace TestAlgo
         public void Dequeue_RemovingElement_ShouldRemoveEmptySpace()
         {
             // Arrange
-            // Creates a queue with 5 slots in array
-            var queue = new CustomQueue<int>(5);
+                // Creates a queue with 5 slots in array
+                var queue = new CustomQueue<int>(5);
 
             // Act
-            // Adding 5 elements
-            queue.Enqueue(3);
-            queue.Enqueue(7);
-            queue.Enqueue(4);
-            queue.Enqueue(6);
-            queue.Enqueue(2);
+                // Adding 5 elements
+                queue.Enqueue(3);
+                queue.Enqueue(7);
+                queue.Enqueue(4);
+                queue.Enqueue(6);
+                queue.Enqueue(2);
 
             // Adding element number 6 sets queue Size to 10  
             queue.Enqueue(9);

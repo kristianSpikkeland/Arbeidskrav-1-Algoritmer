@@ -1,4 +1,4 @@
-﻿using KodeAlgo;
+﻿using KodeAlgo.Oppgave1;
 using System;
 using System.Collections.Generic;
 using System.Text;
