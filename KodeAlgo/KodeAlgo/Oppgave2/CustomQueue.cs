@@ -52,7 +52,7 @@ namespace KodeAlgo.Oppgave2
                 {
                     new_array[i] = _array[i];
                 }
-                // Det gamle peker til det nye
+                // Det gamle arrayet settes til det nye
                 _array = new_array;
             }
         }
@@ -66,11 +66,9 @@ namespace KodeAlgo.Oppgave2
                 Size = Size / 2;
                 T[] new_array = new T[Size];
 
-                // Viktig! Ikke IndexFront + 1 siden metoden blir kalt av Dequeue som har tilbakestilt indeks 
+                // Viktig! Ikke IndexFront + 1 siden metoden blir kalt av Dequeue som har tilbakestilt indekxFront med en 
                 for (int i = 0; i <= IndexFront; i++)
                 {
-                    Console.WriteLine($"I er indeks {i}");
-                    Console.WriteLine($"Verdien {new_array[i]} skal bli {_array[i]}");
                     new_array[i] = _array[i];
                 }
                 _array = new_array;
@@ -80,7 +78,7 @@ namespace KodeAlgo.Oppgave2
 
         public void Enqueue(T val)
         {
-            // Hvis arrayet er tomt er indeks 0 ledig
+            // Hvis det ikke er skrevet noen verdier til arrayet er indeks 0 ledig
             if (IndexFront < 0)
             {
                 // Setter inn verdien på indeks 0
