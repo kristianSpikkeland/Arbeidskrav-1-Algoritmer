@@ -41,9 +41,18 @@ namespace KodeAlgo.Menu
 
                     case 2:
                         {
-                            var removed = queue.Dequeue();
-                            Console.WriteLine($"{removed} was removed");
-                            Console.WriteLine();
+                            try
+                            {
+                                var removed = queue.Dequeue();
+                                Console.WriteLine($"{removed} was removed");
+                                Console.WriteLine();
+                            }
+
+                            catch (ArgumentException)
+                            {
+                                Console.WriteLine("Removing an element from an empty queue is not allowed");
+                                Console.WriteLine();
+                            }
                             break;
                         }
 
@@ -74,6 +83,7 @@ namespace KodeAlgo.Menu
                             Console.WriteLine($"Size: {queue.Size}");
                             Console.WriteLine($"IndexFront index: {queue.IndexFront}");
                             Console.WriteLine($"IndexFront value: {queue._array[queue.IndexFront]}");
+                            Console.WriteLine();
                             break;
                         }
 
