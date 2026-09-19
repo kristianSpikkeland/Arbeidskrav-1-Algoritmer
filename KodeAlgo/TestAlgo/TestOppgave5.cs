@@ -1,4 +1,5 @@
 ﻿using KodeAlgo.Menu;
+using KodeAlgo.Oppgave4;
 using KodeAlgo.Oppgave5;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace TestAlgo
     {
 
         [Fact]
-        public void RecursiveDFS_Majorstuen_ShouldReturnSpesificOrder()
+        public void RecursiveDFS_FromMajorstuen_ShouldReturnSpesificOrder()
         {
             // Arrange
             var graph = new DFSGraph();
@@ -30,7 +31,7 @@ namespace TestAlgo
         }
 
         [Fact]
-        public void IterativeDFS_Majorstuen_ShouldReturnSpesificOrder()
+        public void IterativeDFS_FromMajorstuen_ShouldReturnSpesificOrder()
         {
             // Arrange
             var graph = new DFSGraph();
@@ -50,6 +51,25 @@ namespace TestAlgo
             Assert.Equal(expectedOrder, actualOrder);
         }
 
+
+        // The iterative version uses OrderByDecending for adjacency list, while the recursive usees OrderBy
+        [Fact]
+        public void IterativeAndRecursiveDfs_FromMajorstuen_ShouldReturnSameOrder()
+        {
+            // Arrange
+            var graph = new DFSGraph();
+            var graphHelper = new MenuOppgave5(graph);
+            graphHelper.BuildGraph();
+
+            // Act 
+            var iterativeOrder = graph.TraverseIterativeDFS(graph._adj, "Majorstuen");
+            var recursiveOrder = graph.TraverseRecursiveDFS(graph._adj, "Majorstuen");
+
+            // Assert
+            Assert.Equal(iterativeOrder, recursiveOrder);
+        }
+
+
         [Fact]
         public void TryFindPath_MajorstuenToIsolatedNode_ShouldReturnFalse()
         {
@@ -67,42 +87,69 @@ namespace TestAlgo
         }
 
 
-        //[Fact]
-        //public void TraverseBFS_AddingIsolatedNode_ShouldContain1()
-        //{
-        //    // Arrange
-        //    var graph = new DFSGraph();
-        //    var graphHelper = new MenuOppgave5(graph);
+        // This test checks that IterativeDFS returns a different path than BFS 
+        [Fact]
+        public void Traversing_IterativeDfsAndBfs_TShouldReturnDiffrentOrder()
+        {
+            // Arrange
+            var dfsGraph = new DFSGraph();
+            var bfsGraph = new BFSGraph();
 
-        //    graphHelper.BuildGraph();
-        //    graph.AddNode("NewStation");
+            var graphHelperDfs = new MenuOppgave5(dfsGraph);
+            graphHelperDfs.BuildGraph();
 
-        //    // Act
-        //    var order = graph.TraverseBFS(graph._adj, "NewStation");
+            var graphHelperBfs = new MenuOppgave4(bfsGraph);
+            graphHelperBfs.BuildGraph();
 
-        //    // Assert
-        //    Assert.Single(order);
-        //}
+            // Act
+            var orderDfsIterative = dfsGraph.TraverseIterativeDFS(dfsGraph._adj, "Majorstuen");
+            var orderBfs = bfsGraph.TraverseBFS(bfsGraph._adj, "Majorstuen");
 
-        //[Fact]
-        //// This test checks that adding a isolated node will not connect the isolated node to the rest of the graph
-        //public void TraversBFS_AddingIsolatedNode_TraversingExistingShouldStillContain9()
-        //{
-        //    // Arrange
-        //    var graph = new DFSGraph();
-        //    var graphHelper = new MenuOppgave5(graph);
-
-        //    graphHelper.BuildGraph();
-        //    graph.AddNode("NewStation");
-
-        //    // Act
-        //    // Traversing the part of the graph co
-        //    var order = graph.TraverseBFS(graph._adj, "Tøyen");
+            // Assert
+            Assert.NotEqual(orderDfsIterative, orderBfs);
+        }
 
 
-        //    // Assert
-        //    // There are 10 nodes in total. 9 of them (including Tøyen) is connected
-        //    Assert.Equal(9, order.Count());
-        //}
+        // This test checks that RecursiveDFS returns a different path than BFS 
+        [Fact]
+        public void Traversing_RecursiveDfs_Bfs_ShouldReturnDiffrentOrder()
+        {
+            // Arrange
+            var dfsGraph = new DFSGraph();
+            var bfsGraph = new BFSGraph();
+
+            var graphHelperDfs = new MenuOppgave5(dfsGraph);
+            graphHelperDfs.BuildGraph();
+
+            var graphHelperBfs = new MenuOppgave4(bfsGraph);
+            graphHelperBfs.BuildGraph();
+
+            // Act
+            var orderDfsRecursive = dfsGraph.TraverseRecursiveDFS(dfsGraph._adj, "Majorstuen");
+            var orderBfs = bfsGraph.TraverseBFS(bfsGraph._adj, "Majorstuen");
+
+            // Assert
+            Assert.NotEqual(orderDfsRecursive, orderBfs);
+        }
+
+        // There are 10 nodes in total. 9 of them is connected
+        [Fact]
+        public void TraverseAll_WhenIsolatedNode_ShouldReturnAll()
+        {
+            // Arrrange
+            var dfsGraph = new DFSGraph();
+            var graphHelperDfs = new MenuOppgave5(dfsGraph);
+            graphHelperDfs.BuildGraph();
+
+            // Act
+            dfsGraph.AddNode("NewStation");
+            var orderList = dfsGraph.TraverseAll();
+
+            // Assert
+                // Checks that the unconected node exists in orderList
+                Assert.Equal(10, orderList.Count);
+
+        }
+
     }
 }
