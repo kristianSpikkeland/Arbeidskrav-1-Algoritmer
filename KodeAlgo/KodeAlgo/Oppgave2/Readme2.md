@@ -329,14 +329,16 @@ Tommelfingerregel: kjenner du størrelsen på forhånd, bruk array. Vokser den u
 
         }
 
-        public void Peek()
+        public T Peek()
         {
             // Hvis det finnes elementer
             if (IndexFront > -1)
             {
-                var firstInQueue = _array[IndexFront];
-                Console.WriteLine($"{firstInQueue} is first in queue");
+                T firstInQueue = _array[IndexFront];
+                return firstInQueue;
             }
+
+            throw new ArgumentException("The queue is empty");
         }
 
 
@@ -350,66 +352,100 @@ Tommelfingerregel: kjenner du størrelsen på forhånd, bruk array. Vokser den u
 
 ## Tester
 ```C#
- public class TestOppgave2
+public class TestOppgave2
+{
+
+    [Fact]
+    public void Dequeue_RemovingFromEmptyArray_ShouldThrowException()
     {
+        // Arrange
+        var queue = new CustomQueue<int>();
 
-        [Fact]
-        public void Dequeue_RemovingFromEmptyArray_ShouldThrowException()
-        {
-            // Arrange
-            var queue = new CustomQueue<int>();
-
-            // Assert
-            Assert.Throws<ArgumentException>(() => queue.Dequeue());
-        }
+        // Assert
+        Assert.Throws<ArgumentException>(() => queue.Dequeue());
+    }
 
 
-        [Fact]
-        public void Enqueue_AddingElementToFullArray_ShouldExpandArray()
-        {
-            // Arrange
-                // Creates a queue with 5 slots in array
-                var queue = new CustomQueue<int>(5);
+    [Fact]
+    public void Enqueue_AddingElementToFullArray_ShouldExpandArray()
+    {
+        // Arrange
+            // Creates a queue with 5 slots in array
+            var queue = new CustomQueue<int>(5);
 
-            // Act
-                // Adding 5 elements
-                queue.Enqueue(3);
-                queue.Enqueue(7);
-                queue.Enqueue(4);
-                queue.Enqueue(6);
-                queue.Enqueue(2);
+        // Act
+            // Adding 5 elements
+            queue.Enqueue(3);
+            queue.Enqueue(7);
+            queue.Enqueue(4);
+            queue.Enqueue(6);
+            queue.Enqueue(2);
 
-                // Adding element number 6 should double array  
-                queue.Enqueue(9);
+        // Adding element number 6 should double array  
+        queue.Enqueue(9);
 
-            // Assert
-            Assert.Equal(10, queue.Size);
-        }
+        // Assert
+        Assert.Equal(10, queue.Size);
+    }
 
-        [Fact]
-        public void Dequeue_RemovingElement_ShouldRemoveEmptySpace()
-        {
-            // Arrange
-                // Creates a queue with 5 slots in array
-                var queue = new CustomQueue<int>(5);
+    [Fact]
+    public void Dequeue_RemovingElement_ShouldRemoveEmptySpace()
+    {
+        // Arrange
+            // Creates a queue with 5 slots in array
+            var queue = new CustomQueue<int>(5);
 
-            // Act
-                // Adding 5 elements
-                queue.Enqueue(3);
-                queue.Enqueue(7);
-                queue.Enqueue(4);
-                queue.Enqueue(6);
-                queue.Enqueue(2);
+        // Act
+            // Adding 5 elements
+            queue.Enqueue(3);
+            queue.Enqueue(7);
+            queue.Enqueue(4);
+            queue.Enqueue(6);
+            queue.Enqueue(2);
 
-                // Adding element number 6 sets queue Size to 10  
-                queue.Enqueue(9);
+        // Adding element number 6 sets queue Size to 10  
+        queue.Enqueue(9);
 
  
-                queue.Dequeue();
+        queue.Dequeue();
 
-            // Assert
-            Assert.Equal(5, queue.Size);
-        }
-
+        // Assert
+        Assert.Equal(5, queue.Size);
     }
+
+    [Fact]
+    public void Dequeue_RemovingElement_ShouldUseFIFO()
+    {
+        // Arrange
+        var queue = new CustomQueue<int>(3);
+
+        // Act
+        queue.Enqueue(1);
+        queue.Enqueue(2);
+        queue.Enqueue(3);
+
+        var fifo = queue.Dequeue();
+
+        // Assert
+        Assert.Equal(1, fifo);
+    }
+
+    [Fact]
+    public void Peek_ShouldShowFirstInQueue()
+    {
+        // Arrange
+        var queue = new CustomQueue<int>(3);
+
+        // Act
+        queue.Enqueue(1);
+        queue.Enqueue(2);
+        queue.Enqueue(3);
+
+        var fifo = queue.Peek();
+
+        // Assert
+        Assert.Equal(1, fifo);
+    }
+
+}
 ```
