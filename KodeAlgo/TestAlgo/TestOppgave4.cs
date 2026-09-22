@@ -71,7 +71,7 @@ namespace TestAlgo
         }
 
         [Fact]
-        public void GetShortestPath_CheckMissingPathMajorstuenToNyNode_ShouldReturn0()
+        public void GetShortestPath_CheckMissingPathMajorstuenToNyNode_ShouldReturnNegative()
         {
             // Arrange
             var graph = new BFSGraph();
@@ -84,7 +84,7 @@ namespace TestAlgo
             var shortestPath = graph.GetShortestPath("Majorstuen", "NewStation");
 
             // Assert
-            Assert.Equal(0, shortestPath);
+            Assert.Equal(-1, shortestPath);
             
         }
 
