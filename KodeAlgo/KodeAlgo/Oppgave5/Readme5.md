@@ -27,15 +27,20 @@ BFS sin minnebruk sliter ved brede grafer mens DFS sliter ved dype grafer. Begge
 
 ### Basissteg og rekrusivt steg (rekrusiv variant)
 
-Basisteget er foreach løkken som leter gjennom naboene samt sjekken om naboen er besøkt. Det finnes ikke et uendelig antall nabooer.
+I koden finnes ingen return for basisteget. Men når alle naboer er besøkt vil ikke DFS(neighbor) kjøres mer og vi når slutten av koden.
+
+Foreach løkken leter gjennom naboene og sjekker om naboen er besøkt. Det finnes ikke et uendelig antall nabooer.
 OrderBy sørger for at naboene blir alfabetisk sortert.
 
 
 ```C#
-foreach (var neighbor in graph[node].OrderBy(n => n))
+foreach (var neighbor in neighbors.OrderBy(n => n))
 {
-                    
     if (!visited.Contains(neighbor))
+    {
+        Dfs(neighbor);
+    }
+}                      
 ```
 
 Det rekrusive steget er:
@@ -51,20 +56,15 @@ visited.Add(node);
 order.Add(node);
 
                 
-foreach (var neighbor in graph[node].OrderBy(n => n))
+foreach (var neighbor in neighbors.OrderBy(n => n))
 {
-    // Hvis neigbor ikke finnes i visited
     if (!visited.Contains(neighbor))
     {
-        // Blir neighbor ny node som prosesseres med Dfs metoden
         Dfs(neighbor);
     }
-}
+}  
 ```
 Neighbor har blitt til node og rekrusjonen kjøres helt til det ikke er flere naboer i grafen å besøke.
-
-I koden finnes ingen return for basisteget. Men når alle naboer er besøkt vil ikke DFS(neighbor) kjøres mer og vi når slutten av koden.
-
 
 
 # KI bruk
@@ -249,6 +249,11 @@ public class DFSGraph
     // Metode som bruker rekrusjon for å traversere graf
     public List<string> TraverseRecursiveDFS(Dictionary<string, List<string>> graph, string start)
     {
+        if (!Nodes.Contains(start))
+        {
+            throw new ArgumentException("Cannot traverse node that does not exist");
+        }
+
         var visited = new HashSet<string>();
         var order = new List<string>();
 
@@ -262,14 +267,17 @@ public class DFSGraph
             visited.Add(node);
             order.Add(node);
 
-                
-            foreach (var neighbor in graph[node].OrderBy(n => n))
+            // Bruker TryGetValue for å unngå exception om starnode ikke finnes i graf
+            if (graph.TryGetValue(node, out var neighbors))
             {
-                // Hvis neigbor ikke finnes i visited
-                if (!visited.Contains(neighbor))
+                foreach (var neighbor in neighbors.OrderBy(n => n))
                 {
-                    // Blir neighbor ny node som prosesseres med Dfs metoden
-                    Dfs(neighbor);
+                    // Hvis neigbor ikke finnes i visited
+                    if (!visited.Contains(neighbor))
+                    {
+                        // Blir neighbor ny node som prosesseres med Dfs metoden
+                        Dfs(neighbor);
+                    }
                 }
             }
         }
@@ -280,6 +288,11 @@ public class DFSGraph
     // Metode som bruker traverserer graf iterativt ved hjelp av stack
     public List<string> TraverseIterativeDFS(Dictionary<string, List<string>> graph, string start)
     {
+        if (!Nodes.Contains(start))
+        {
+            throw new ArgumentException("Cannot traverse node that does not exist");
+        }
+
         var stack = new Stack<string>();
         stack.Push(start);
 
@@ -299,16 +312,20 @@ public class DFSGraph
             }
             order.Add(node);
 
-            // Byttet til OrderByDescending for å få samme rekkefølge som i den rekrusive varianten
-            foreach (var neighbor in graph[node].OrderByDescending(n => n))
+            // Bruker TryGetValue for å unngå exception om starnode ikke finnes i graf
+            if (graph.TryGetValue(node, out var neighbors))
             {
-                // Hvis naboen er besøkt, gå tilbake til foreach og forsøk med en ny
-                if (visited.Contains(neighbor))
+                // Byttet til OrderByDescending for å få samme rekkefølge som i den rekrusive varianten
+                foreach (var neighbor in neighbors.OrderByDescending(n => n))
                 {
-                    continue;
-                }
-                // Hvis naboen ikke er besøkt legges naboen til stacken
-                stack.Push(neighbor);
+                    // Hvis naboen er besøkt, gå tilbake til foreach og forsøk med en ny
+                    if (visited.Contains(neighbor))
+                    {
+                        continue;
+                    }
+                    // Hvis naboen ikke er besøkt legges naboen til stacken
+                    stack.Push(neighbor);
+                }                      
             }
         }
         return order;
@@ -352,8 +369,6 @@ public class DFSGraph
         // Hvis alle noder er besøkt, men ingen målnode er funnet
         // Ja, da finnes det ingen vei
         return false;
-
-
     }
 
 
