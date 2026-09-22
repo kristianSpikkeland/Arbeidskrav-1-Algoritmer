@@ -58,16 +58,26 @@ namespace KodeAlgo.Menu
 
                     case 3:
                         {
-                            queue.Print();
+                            queue.Print(); 
                             break;
                         }
 
                     case 4:
                         {
-                            queue.Peek();
+                            try
+                            {
+                                var first = queue.Peek();
+                                Console.WriteLine($"{first} is first in queue");
+                            }
+
+                            catch (ArgumentException exception)
+                            {
+                                Console.WriteLine(exception.Message);
+                            }
                             Console.WriteLine();
                             break;
                         }
+
                     case 5:
                         {
                             queue.Enqueue(3);
@@ -80,6 +90,13 @@ namespace KodeAlgo.Menu
 
                     case 6:
                         {
+                            if (queue.IndexFront < 0)
+                            {
+                                Console.WriteLine("The queue is empty");
+                                Console.WriteLine();
+                                return;
+                            }
+
                             Console.WriteLine($"Size: {queue.Size}");
                             Console.WriteLine($"IndexFront index: {queue.IndexFront}");
                             Console.WriteLine($"IndexFront value: {queue._array[queue.IndexFront]}");
