@@ -72,11 +72,11 @@ class Program
                         menuOppgave5.BuildGraph();
                         menuOppgave5.DFSTraverseRecursiveFromMajorstuen();
                         menuOppgave5.DFSTraverseIterativeFromMajorstuen();
-                        var isPath = DFS.TryFindPath("Majorstuen", "Tøyn");
-                        Console.WriteLine("There is noe path between Majorstuen and Tøyen. Ispath = "+isPath);
+                        var isPath = DFS.TryFindPath("Majorstuen", "NewNode");
+                        Console.WriteLine("There is no path between Majorstuen and NewNode. Ispath = "+isPath);
                         Console.WriteLine();
                         menuOppgave5.DFSTraverseIncludingIsolatedNode();
-
+                        menuOppgave5.DFSTraverseRecursiveFromNodeNotExisting();
 
                         break;
                     }
