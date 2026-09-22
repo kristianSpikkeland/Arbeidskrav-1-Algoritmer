@@ -13,7 +13,13 @@ Videre fikk man forklart hva basisteg og rekrusivt steg er og hva forskjellen er
 Noen enkle spørsmål knyttet til markdown fil.
 Samt noen spørsmål rundt oppgaveforståelse.
 
+## Kvalitetssikring
+Da man regnet seg ferdig kjørte man denne prompten:
+Da mener jeg at arbeidskravet er ferdig og at kun videoinnspilling gjenstår. 
+Gå gjennom besvarelsen og finn kun dem viktigste manglene/feilene i forhold til oppgaveteksten. 
+Tre PDF side er maks og sorter per oppgave. Det skal være høy terskel for å regne noe som feil. Vær pedagogsik slik at jeg skjønner hvorfor det er feil.
 
+Svaret ligger vedlagt i vedlegs mappen med navn: Gjennomgang-Arbeidskrav1.pdf 
 
 ## Andre kilder
 ### Komme igang
