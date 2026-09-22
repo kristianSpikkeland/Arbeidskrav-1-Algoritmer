@@ -69,63 +69,65 @@ Men det er viktig å huske at binary krever sorterte data.
 ### Kode
 
 ```C#
-        public static int BinaryReaderSearch(int[] array, int target)
+public static int BinaryReaderSearch(int[] array, int target)
+{
+    // Legger til validering
+    if (array.Length < 1)
+    {
+        throw new ArgumentException("Array can not be empty");
+    }
+
+    if (array.Length == 1)
+    {
+        throw new ArgumentException("Array should contain more than one element");
+    }
+
+    // Variabel for å telle runder
+    var count = 0;
+
+    int left = 0;
+    int right = array.Length - 1;
+
+    while (left <= right)
+    {
+
+        count += 1;
+        Console.WriteLine($" --- Count {count}");
+
+        int mid = left + (right - left) / 2;
+
+        // Returner om midten er lik det vi søker etter og det ikke finnes lavere indekser for det vi søker etter
+        if (array[mid] == target && (mid == 0 || array[mid -1] != target))
         {
-            // Legger til validering
-            if (array.Length < 1)
-            {
-                throw new ArgumentException("Array can not be empty");
-            }
-
-            if (array.Length == 1)
-            {
-                throw new ArgumentException("Array should contain more than one element");
-            }
-
-            // Variabel for å telle runder
-            var count = 0;
-
-            int left = 0;
-            int right = array.Length - 1;
-
-            while (left <= right)
-            {
-
-                count += 1;
-                Console.WriteLine($" --- Count {count}");
-
-                int mid = left + (right - left) / 2;
-
-                // Returner om midten er lik det vi søker etter og det ikke finnes lavere indekser for det vi søker etter
-                if (array[mid] == target && array[mid -1] != target)
-                {
-                    return mid;
-                }
-
-                // Hvis midten er lik det vi søker etter.
-                // Men det derimot finnes lavere indekser med verdien vi søker etter
-                if (array[mid] == target && array[mid - 1] == target)
-                {
-                    int i = mid;
-                    while (i > 0 && array[i - 1] == target) i--;
-                    return i;
-                }
-                
-                
-
-                if (array[left] <= mid)
-                {
-                    left = mid + 1;
-                }
-
-                else
-                {
-                    right = mid - 1;
-                }
-            }
-            return -1;
-            
+            return mid;
         }
+
+        // Hvis midten er lik det vi søker etter.
+        // Men det derimot finnes lavere indekser med verdien vi søker etter
+        if (array[mid] == target && array[mid - 1] == target)
+        {
+            int i = mid;
+            while (i > 0 && array[i - 1] == target) i--;
+            return i;
+        }
+                
+                
+        // Hvis verdien av midtindeksen er mindre enn målet vårt
+        if (array[mid] <= target)
+        {
+            // Da vet vi at målet ligger høyere og vi flytter pekeren left oppover
+            left = mid + 1;
+        }
+
+        else
+        {
+            // Hvis ikke vet vi at målet ligger lavere og vi flytter pekeren right lavere.
+            right = mid - 1;
+        }
+    }
+    return -1;
+            
+}
 ```
 
 ## KI bruk
@@ -192,127 +194,170 @@ return i;
 
 ### Tester 
 ```C#
- public class TestOppgave1
+public class TestOppgave1
+{
+    [Fact]
+    public void LinearSearch_Value7Exists_ShouldReturnIndex3()
     {
-        [Fact]
-        public void LinearSearch_Value7Exists_ShouldReturnIndex3()
-        {
-            // Arrange
-            var nums = new int[] { 8, 3, 11, 7, 2, 9, 5 };
+        // Arrange
+        var nums = new int[] { 8, 3, 11, 7, 2, 9, 5 };
 
-            // Act
-            var result = Oppgave1.LinearSearch(nums, 7);
+        // Act
+        var result = Oppgave1.LinearSearch(nums, 7);
 
-            // Assert
-            Assert.Equal(3, result);
-        }
-
-        [Fact]
-        public void LinearSearch_Value42NotExists_ShouldReturnNegativeIndex()
-        {
-            // Arrange
-            var nums = new int[] { 8, 3, 11, 7, 2, 9, 5 };
-
-            // Act
-            var result = Oppgave1.LinearSearch(nums, 42);
-
-            // Assert
-            Assert.Equal(-1, result);
-        }
-
-        [Fact]
-        public void LinearSearch_EmptyArray_ShouldThrowArgumentException()
-        {
-            // Arrange
-            var nums = new int[] {};
-
-            // Assert
-            Assert.Throws<ArgumentException>(() => Oppgave1.LinearSearch(nums, 7));
-
-        }
-
-        [Fact]
-        public void LinearSearch_OneElementInArray_ShouldThrowArgumentException()
-        {
-            // Arrange
-            var nums = new int[] { 5 };
-
-            // Assert
-            Assert.Throws<ArgumentException>(() => Oppgave1.LinearSearch(nums, 5));
-
-        }
-
-        [Fact]
-        public void LinearSearch_SameNumbers_ShouldReturnFirstIndex()
-        {
-            // Arrange
-            var nums = new int[] { 2, 5, 4, 4, 4, 4, 3 };
-
-            // Act
-            var result = Oppgave1.LinearSearch(nums, 4);
-
-            Assert.Equal(2, result);
-        }
-
-        [Fact]
-        public void BinarySearch_Value13Exists_ShouldReturnIndex5()
-        {
-            // Arrange
-            var nums = new int[] { 2, 5, 7, 9, 11, 13, 17 };
-
-            // Act
-            var result = Oppgave1.BinaryReaderSearch(nums, 13);
-
-            // Assert
-            Assert.Equal(5, result);
-        }
-
-        [Fact]
-        public void BinarySearch_Value4NotExists_ShouldReturnNegativeIndex()
-        {
-            // Arrange
-            var nums = new int[] { 2, 5, 7, 9, 11, 13, 17 };
-
-            // Act
-            var result = Oppgave1.BinaryReaderSearch(nums, 4);
-
-            // Assert
-            Assert.Equal(-1, result);
-        }
-
-        [Fact]
-        public void BinarySearch_EmptyArray_ShouldThrowArgumentException()
-        {
-            // Arrange
-            var nums = new int[] { };
-
-            // Assert
-            Assert.Throws<ArgumentException>(() => Oppgave1.BinaryReaderSearch(nums, 13));
-
-        }
-
-        [Fact]
-        public void BinarySearch_OneElementInArray_ShouldThrowArgumentException()
-        {
-            // Arrange
-            var nums = new int[] { 5 };
-
-            // Assert
-            Assert.Throws<ArgumentException>(() => Oppgave1.BinaryReaderSearch(nums, 5));
-
-        }
-
-        [Fact]
-        public void BinarySearch_SameNumbers_ShouldReturnFirstIndex()
-        {
-            // Arrange
-            var nums = new int[] { 2, 5, 4, 4, 4, 4, 3 };
-
-            // Act
-            var result = Oppgave1.BinaryReaderSearch(nums, 4);
-
-            Assert.Equal(2, result);
-        }
+        // Assert
+        Assert.Equal(3, result);
     }
+
+    [Fact]
+    public void LinearSearch_Value42NotExists_ShouldReturnNegativeIndex()
+    {
+        // Arrange
+        var nums = new int[] { 8, 3, 11, 7, 2, 9, 5 };
+
+        // Act
+        var result = Oppgave1.LinearSearch(nums, 42);
+
+        // Assert
+        Assert.Equal(-1, result);
+    }
+
+    [Fact]
+    public void LinearSearch_EmptyArray_ShouldThrowArgumentException()
+    {
+        // Arrange
+        var nums = new int[] {};
+
+        // Assert
+        Assert.Throws<ArgumentException>(() => Oppgave1.LinearSearch(nums, 7));
+
+    }
+
+    [Fact]
+    public void LinearSearch_OneElementInArray_ShouldThrowArgumentException()
+    {
+        // Arrange
+        var nums = new int[] { 5 };
+
+        // Assert
+        Assert.Throws<ArgumentException>(() => Oppgave1.LinearSearch(nums, 5));
+
+    }
+
+    [Fact]
+    public void LinearSearch_SameNumbers_ShouldReturnFirstIndex()
+    {
+        // Arrange
+        var nums = new int[] { 2, 5, 4, 4, 4, 4, 3 };
+
+        // Act
+        var result = Oppgave1.LinearSearch(nums, 4);
+
+        Assert.Equal(2, result);
+    }
+
+    [Fact]
+    public void BinarySearch_Value13Exists_ShouldReturnIndex5()
+    {
+        // Arrange
+        var nums = new int[] { 2, 5, 7, 9, 11, 13, 17 };
+
+        // Act
+        var result = Oppgave1.BinaryReaderSearch(nums, 13);
+
+        // Assert
+        Assert.Equal(5, result);
+    }
+
+    [Fact]
+    public void BinarySearch_Value7Exists_ShouldReturnIndex5()
+    {
+        // Arrange
+        var nums = new int[] { 2, 5, 7, 9, 11, 13, 17 };
+
+        // Act
+        var result = Oppgave1.BinaryReaderSearch(nums, 7);
+
+        // Assert
+        Assert.Equal(2, result);
+    }
+
+
+    // Denne sjekken sjekker at programmet kjører skikkelig når vi søker etter elment på indeks 0.
+    [Fact]
+    public void BinarySearch_Value2Exists_ShouldReturnIndex0()
+    {
+        // Arrange
+        var nums = new int[] { 2, 2, 9, 11, 13, 17 };
+
+        // Act
+        var result = Oppgave1.BinaryReaderSearch(nums, 2);
+
+        // Assert
+        Assert.Equal(0, result);
+    }
+
+    [Fact]
+    public void BinarySearch_Value4NotExists_ShouldReturnNegativeIndex()
+    {
+        // Arrange
+        var nums = new int[] { 2, 5, 7, 9, 11, 13, 17 };
+
+        // Act
+        var result = Oppgave1.BinaryReaderSearch(nums, 4);
+
+        // Assert
+        Assert.Equal(-1, result);
+    }
+
+    [Fact]
+    public void BinarySearch_EmptyArray_ShouldThrowArgumentException()
+    {
+        // Arrange
+        var nums = new int[] { };
+
+        // Assert
+        Assert.Throws<ArgumentException>(() => Oppgave1.BinaryReaderSearch(nums, 13));
+
+    }
+
+    [Fact]
+    public void BinarySearch_OneElementInArray_ShouldThrowArgumentException()
+    {
+        // Arrange
+        var nums = new int[] { 5 };
+
+        // Assert
+        Assert.Throws<ArgumentException>(() => Oppgave1.BinaryReaderSearch(nums, 5));
+
+    }
+
+    [Fact]
+    public void BinarySearch_SameNumbers_ShouldReturnFirstIndex()
+    {
+        // Arrange
+        var nums = new int[] { 2, 3, 4, 4, 4, 4, 5 };
+
+        // Act
+        var result = Oppgave1.BinaryReaderSearch(nums, 4);
+
+        Assert.Equal(2, result);
+    }
+
+
+    [Fact]
+    public void BinarySearch_UnsortedNumbers_ShouldNotFindValue()
+    {
+        // Arrange
+        var nums = new int[] { 10, 9, 5, 4, 11, 12, 6 };
+
+        // Act
+        var result = Oppgave1.BinaryReaderSearch(nums, 9);
+
+        Assert.NotEqual(1, result);
+    }
+
+
+}
 
 ```
