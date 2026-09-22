@@ -20,6 +20,10 @@ FIFO står for Fist In First Out og er et kjennetegn for BFS grafer.
 FIFO rekkefølge gir korteste vei siden vi alltid besøker dem nærmeste nodene først under traverseringen.
 Eller sakt på en annen måte: noder bahandles nivå for nivå og vi kan dermed finne den stien med færrest antell kanter mellom start - og målnode.
 
+### Returverdi ingen rute for GetShortestPath
+Jeg har valgt å returnere -1 om det ikke finnes noen rute. Da kan man enkelt bruke denne verdien for å gi beskjed til bruker om at det ikke finnes rute.
+
+
 ## KI bruk
 Prompt: 
 Holder på med BFS for en graf med et endepunkt uten naboer. Får KeyNotFoundException for endepunktet. 
