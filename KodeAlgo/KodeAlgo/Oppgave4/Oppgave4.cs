@@ -122,8 +122,8 @@ namespace KodeAlgo.Oppgave4
                     }
                 }
             }
-            // Returnerer 0 om goal aldri blir funnet. Det er i så fall ingen sti mellom nodene.
-            return 0;
+            // Returnerer -1 om goal aldri blir funnet. Det er i så fall ingen sti mellom nodene.
+            return -1;
         }
 
         public List<string> GoBack(string start, string goal, Dictionary<string, string> parent)
