@@ -51,6 +51,11 @@ namespace KodeAlgo.Oppgave4
 
         public List<string> TraverseBFS(Dictionary<string, List<string>> graph, string start)
         {
+            if (!Nodes.Contains(start))
+            {
+                throw new ArgumentException("Cannot traverse node that does not exist");
+            }
+
             var visited = new HashSet<string>() { start };
             var order = new List<string>();
 
