@@ -325,5 +325,37 @@ public class TestOppgave4
         Assert.Equal(0, shortestPath);
             
     }
+
+    Fact]
+    public void GetShortestPath_MajorstuenToGrønland()
+    {
+        // Arrange
+        var graph = new BFSGraph();
+        var graphHelper = new MenuOppgave4(graph);
+
+        graphHelper.BuildGraph();
+
+        // Act
+        var shortestPath = graph.GetShortestPath("Majorstuen", "Grønland");
+
+        // Assert
+        Assert.Equal(4, shortestPath);
+    }
+
+    [Fact]
+    public void GetShortestPath_UllevålToTøyen()
+    {
+        // Arrange
+        var graph = new BFSGraph();
+        var graphHelper = new MenuOppgave4(graph);
+
+        graphHelper.BuildGraph();
+
+        // Act
+        var shortestPath = graph.GetShortestPath("Ullevål stadion", "Tøyen");
+
+        // Assert
+        Assert.Equal(8, shortestPath);
+    }
 }
 ```
