@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace TestAlgo
 {
@@ -69,6 +70,39 @@ namespace TestAlgo
             Assert.Equal(5, queue.Size);
         }
 
+        [Fact]
+        public void Dequeue_RemovingElement_ShouldUseFIFO()
+        {
+            // Arrange
+            var queue = new CustomQueue<int>(3);
+
+            // Act
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            queue.Enqueue(3);
+
+            var fifo = queue.Dequeue();
+
+            // Assert
+            Assert.Equal(1, fifo);
+        }
+
+        [Fact]
+        public void Peek_ShouldShowFirstInQueue()
+        {
+            // Arrange
+            var queue = new CustomQueue<int>(3);
+
+            // Act
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            queue.Enqueue(3);
+
+            var fifo = queue.Peek();
+
+            // Assert
+            Assert.Equal(1, fifo);
+        }
 
     }
 }
