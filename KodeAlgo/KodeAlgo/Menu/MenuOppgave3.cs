@@ -80,11 +80,22 @@ namespace KodeAlgo.Menu
 
             // Quicksort analyze
             Console.WriteLine("Data analyze: ");
-            var nums7 = new int[] { 3, 5, 8, 5 };
+            var nums7 = new int[] { 3, 5, 8, 5, 4 };
             Console.WriteLine("Inital list: " + string.Join(", ", nums7));
             analyzeWithCounter.QuickSort(nums7, 0, nums7.Length - 1);
             Console.WriteLine("Total swaps: " + analyzeWithCounter.swapCounter);
             Console.WriteLine("Total splits: " + analyzeWithCounter.splitCounter);
+            Console.WriteLine("Total comparisons: " + analyzeWithCounter.comparisonCounter);
+            Console.WriteLine();
+
+            // Quicksort analyze
+            Console.WriteLine("Data analyze: ");
+            var nums8 = new int[] { 3, 4, 5, 5, 8 };
+            Console.WriteLine("Inital list: " + string.Join(", ", nums8));
+            analyzeWithCounter.QuickSort(nums8, 0, nums8.Length - 1);
+            Console.WriteLine("Total swaps: " + analyzeWithCounter.swapCounter);
+            Console.WriteLine("Total splits: " + analyzeWithCounter.splitCounter);
+            Console.WriteLine("Total comparisons: " + analyzeWithCounter.comparisonCounter);
             Console.WriteLine();
 
         }
