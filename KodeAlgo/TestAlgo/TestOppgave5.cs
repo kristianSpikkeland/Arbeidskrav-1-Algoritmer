@@ -89,7 +89,7 @@ namespace TestAlgo
 
         // This test checks that IterativeDFS returns a different path than BFS 
         [Fact]
-        public void Traversing_IterativeDfsAndBfs_TShouldReturnDiffrentOrder()
+        public void Traversing_IterativeDfsAndBfs_ShouldReturnDiffrentOrder()
         {
             // Arrange
             var dfsGraph = new DFSGraph();
