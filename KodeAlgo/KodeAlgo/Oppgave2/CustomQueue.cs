@@ -131,14 +131,16 @@ namespace KodeAlgo.Oppgave2
 
         }
 
-        public void Peek()
+        public T Peek()
         {
             // Hvis det finnes elementer
             if (IndexFront > -1)
             {
-                var firstInQueue = _array[IndexFront];
-                Console.WriteLine($"{firstInQueue} is first in queue");
+                T firstInQueue = _array[IndexFront];
+                return firstInQueue;
             }
+
+            throw new ArgumentException("The queue is empty");
         }
 
 
