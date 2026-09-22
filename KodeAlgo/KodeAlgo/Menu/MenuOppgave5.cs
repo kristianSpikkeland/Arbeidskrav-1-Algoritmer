@@ -54,5 +54,23 @@ namespace KodeAlgo.Menu
             Console.WriteLine(string.Join(", ", order));
             Console.WriteLine();
         }
+
+        // DFS manglende startstasjon. Kaster ikke exception, men returnerer tom liste.
+        public void DFSTraverseRecursiveFromNodeNotExisting()
+        {
+            try
+            {
+                Console.WriteLine("Recursivly traversing graph with start node not existing...");
+                var order = _dfsGraph.TraverseRecursiveDFS(_dfsGraph._adj, "NotExisting");
+                Console.WriteLine(string.Join(", ", order));
+                Console.WriteLine();
+            }
+
+            catch (ArgumentException exception)
+            {
+                Console.WriteLine(exception.Message);
+                Console.WriteLine();
+            }
+        }
     }
 }
