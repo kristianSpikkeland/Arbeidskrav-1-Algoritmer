@@ -9,6 +9,7 @@ namespace KodeAlgo
     {
         public int swapCounter = new();
         public int splitCounter = new();
+        public int comparisonCounter = new();
 
         public void QuickSort(int[] array, int low, int high)
         {
@@ -41,6 +42,7 @@ namespace KodeAlgo
 
             for (int j = low; j < pivotIndex; j++)
             {
+                comparisonCounter++;
                 if (array[j] < array[pivotIndex])
                 {
                     i++;
