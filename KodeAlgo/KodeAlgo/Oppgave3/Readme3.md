@@ -56,7 +56,7 @@ Bilde under viser forskjellen mellom en usortert og en sortert liste.
 
 En ulempe med QuickSort er at den blir regnet som ustabil. Med det menes det at to like verdier kan få byttet sin plass med hverandre.
 Etter litt drøfting med KI kommer det fram at hvis verdiene er helt like gjør det ingenting. Men om to elementer med lik sorteringsnøkkel 
-bytter plass, spiller det faktisk er rolle om elementene bører på mer informasjon enn nøkkelen (kilde Claude).
+bytter plass, spiller det faktisk er rolle om elementene bærer på mer informasjon enn nøkkelen (kilde Claude).
 
 QuickSort er vistnok bra for store data set, men dårlig for små. Kilde: https://www.geeksforgeeks.org/dsa/quick-sort-algorithm/
 

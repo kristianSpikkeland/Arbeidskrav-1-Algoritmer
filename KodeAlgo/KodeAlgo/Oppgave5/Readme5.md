@@ -18,7 +18,7 @@ Om man ikke tar et aktivt valg om å snu besøktrekkefølge, vil de to varianten
 
 ### Sammenligning BFS, DFS
 BFS bruker kø mens DFS bruker stack.
-Man kan si at BFS bruker FIFO (first in first out) mens DFS bruker LIFO(last in last out).
+Man kan si at BFS bruker FIFO (first in first out) mens DFS bruker LIFO(last in first out).
 DFS står for depth first search som vil si at DFS går i dybden først. BFS står for breadth first search som vil si at BFS går i bredden først.
 Iterativ DFS ligner veldig på BFS og ved bytte fra BFS kø til stack har vi faktisk DFS.
 BFS passer for å finne korteste vei i uvektet graf.
