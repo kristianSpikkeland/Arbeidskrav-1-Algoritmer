@@ -50,6 +50,11 @@ namespace KodeAlgo.Oppgave5
         // Metode som bruker rekrusjon for å traversere graf
         public List<string> TraverseRecursiveDFS(Dictionary<string, List<string>> graph, string start)
         {
+            if (!Nodes.Contains(start))
+            {
+                throw new ArgumentException("Cannot traverse node that does not exist");
+            }
+
             var visited = new HashSet<string>();
             var order = new List<string>();
 
@@ -63,14 +68,17 @@ namespace KodeAlgo.Oppgave5
                 visited.Add(node);
                 order.Add(node);
 
-                
-                foreach (var neighbor in graph[node].OrderBy(n => n))
+                // Bruker TryGetValue for å unngå exception om starnode ikke finnes i graf
+                if (graph.TryGetValue(node, out var neighbors))
                 {
-                    // Hvis neigbor ikke finnes i visited
-                    if (!visited.Contains(neighbor))
+                    foreach (var neighbor in neighbors.OrderBy(n => n))
                     {
-                        // Blir neighbor ny node som prosesseres med Dfs metoden
-                        Dfs(neighbor);
+                        // Hvis neigbor ikke finnes i visited
+                        if (!visited.Contains(neighbor))
+                        {
+                            // Blir neighbor ny node som prosesseres med Dfs metoden
+                            Dfs(neighbor);
+                        }
                     }
                 }
             }
@@ -81,6 +89,11 @@ namespace KodeAlgo.Oppgave5
         // Metode som bruker traverserer graf iterativt ved hjelp av stack
         public List<string> TraverseIterativeDFS(Dictionary<string, List<string>> graph, string start)
         {
+            if (!Nodes.Contains(start))
+            {
+                throw new ArgumentException("Cannot traverse node that does not exist");
+            }
+
             var stack = new Stack<string>();
             stack.Push(start);
 
@@ -100,16 +113,20 @@ namespace KodeAlgo.Oppgave5
                 }
                 order.Add(node);
 
-                // Byttet til OrderByDescending for å få samme rekkefølge som i den rekrusive varianten
-                foreach (var neighbor in graph[node].OrderByDescending(n => n))
+                // Bruker TryGetValue for å unngå exception om starnode ikke finnes i graf
+                if (graph.TryGetValue(node, out var neighbors))
                 {
-                    // Hvis naboen er besøkt, gå tilbake til foreach og forsøk med en ny
-                    if (visited.Contains(neighbor))
+                    // Byttet til OrderByDescending for å få samme rekkefølge som i den rekrusive varianten
+                    foreach (var neighbor in neighbors.OrderByDescending(n => n))
                     {
-                        continue;
-                    }
-                    // Hvis naboen ikke er besøkt legges naboen til stacken
-                    stack.Push(neighbor);
+                        // Hvis naboen er besøkt, gå tilbake til foreach og forsøk med en ny
+                        if (visited.Contains(neighbor))
+                        {
+                            continue;
+                        }
+                        // Hvis naboen ikke er besøkt legges naboen til stacken
+                        stack.Push(neighbor);
+                    }                      
                 }
             }
             return order;
@@ -153,8 +170,6 @@ namespace KodeAlgo.Oppgave5
             // Hvis alle noder er besøkt, men ingen målnode er funnet
             // Ja, da finnes det ingen vei
             return false;
-
-
         }
 
 
