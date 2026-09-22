@@ -20,7 +20,8 @@ Pivotverdien er nå det eneste tallet som er garantert riktig plassert etter at 
 Pivotindeksen har jeg hentet ut i metoden Partition. 
 
 For at resten av tallene skal bli sortert kalles QuickSort rekrusivt. En metode som kaller seg selv kan kjøres uendelig.
-Derfor setter vi opp at hvis low er mindre enn high så kjøres rekrusjonen. Det er dette som er basissteget. 
+Derfor setter vi opp at hvis low er mindre enn high så kjøres rekrusjonen. Basisteget blir det motsatte.
+Altså low >= high for da når metoden slutten og reutrnerer. Rekrusjonen er dermed stoppet.  
 Dermed får en utgang i det low møter high etter hvert som arrayet blir mer og mer delt. 
 Vi henter ut indeksen ved:
 
@@ -48,6 +49,10 @@ med dårligere garantert tidskompleksitet. Grunnet skal være at QuickSort har b
 
 Betydningen av inputdata har mye å si for QuickSort. Den liker ikke at ting er tilnærmet ferdig sortert og valg av pivot har mye å si.
 Vi vil ha en pivot som deler arrayet i to tilnærmet like store deler. 
+
+Bilde under viser forskjellen mellom en usortert og en sortert liste.
+
+![Bilde graf](./QuickSortAnalyse.png)
 
 En ulempe med QuickSort er at den blir regnet som ustabil. Med det menes det at to like verdier kan få byttet sin plass med hverandre.
 Etter litt drøfting med KI kommer det fram at hvis verdiene er helt like gjør det ingenting. Men om to elementer med lik sorteringsnøkkel 
