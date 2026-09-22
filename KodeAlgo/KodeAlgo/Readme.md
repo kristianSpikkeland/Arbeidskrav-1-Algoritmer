@@ -3,6 +3,7 @@
 * Utviklet i: Visual Studio
 * Om: Arbeidskrav algoritmer Gokstad Akademiet
 * Lenke Github: https://github.com/kristianSpikkeland/Arbeidskrav-1-Algoritmer.git
+* Lenke til videopresentasjon: https://fagskoleniagder.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=7ddec794-198a-4599-b445-b4cd00e0543c&start=0
 
 ## Kjøring
 Programmet kjøres med play knappen. Utforming på denne avhengiger av kodeeditor.
@@ -41,10 +42,10 @@ Tre PDF side er maks og sorter per oppgave. Det skal være høy terskel for å r
 Svaret ligger vedlagt i vedlegs mappen med navn: Gjennomgang-Arbeidskrav1.pdf 
 
 ## Refleksjon
-Det har vært et læretikt prosjekt. Jeg vil si at det har vært det prosjektet der hvor man har lagt ned mest timer til nå. Totalt sett har det blitt en del KI bruk,
-men det har vært nødvendig da mye var nytt for meg. Samtidig har man øvt en del på algoritmer + Balzor i sommer så man har fått implementert en god del egen kode også.
+Det har vært et lærerikt prosjekt. Jeg vil si at det har vært det prosjektet der hvor man har lagt ned mest timer til nå. Totalt sett har det blitt en del KI bruk,
+men det har vært nødvendig da mye var nytt for meg. Samtidig har man øvt en del på algoritmer + Balzor i sommer, så man har fått implementert en god del egen kode også.
 Liker godt å få Claude til å lage undervisningsopplegg og komme med kodeeksempler på ting man ikke har vært borti før. Litt varierende grad av mengde kodekommentarer.
-Men har forsøkt å fremheve det jeg mener er viktig. Og kode som ikke sitter like bra i eget hode har man lagt til ekstra kommentarer for å enklere forstå kodebasen.
+Men har forsøkt å fremheve det jeg mener er viktig. Og kode som ikke sitter like bra i eget hode, har man lagt til ekstra kommentarer for å enklere forstå kodebasen.
 
 ## Andre kilder
 ### Komme igang
