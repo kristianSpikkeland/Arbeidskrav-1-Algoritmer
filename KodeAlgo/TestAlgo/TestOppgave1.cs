@@ -81,6 +81,34 @@ namespace TestAlgo
         }
 
         [Fact]
+        public void BinarySearch_Value7Exists_ShouldReturnIndex5()
+        {
+            // Arrange
+            var nums = new int[] { 2, 5, 7, 9, 11, 13, 17 };
+
+            // Act
+            var result = Oppgave1.BinaryReaderSearch(nums, 7);
+
+            // Assert
+            Assert.Equal(2, result);
+        }
+
+
+        // Denne sjekken sjekker at programmet kjører skikkelig når vi søker etter elment på indeks 0.
+        [Fact]
+        public void BinarySearch_Value2Exists_ShouldReturnIndex0()
+        {
+            // Arrange
+            var nums = new int[] { 2, 2, 9, 11, 13, 17 };
+
+            // Act
+            var result = Oppgave1.BinaryReaderSearch(nums, 2);
+
+            // Assert
+            Assert.Equal(0, result);
+        }
+
+        [Fact]
         public void BinarySearch_Value4NotExists_ShouldReturnNegativeIndex()
         {
             // Arrange
@@ -119,12 +147,27 @@ namespace TestAlgo
         public void BinarySearch_SameNumbers_ShouldReturnFirstIndex()
         {
             // Arrange
-            var nums = new int[] { 2, 5, 4, 4, 4, 4, 3 };
+            var nums = new int[] { 2, 3, 4, 4, 4, 4, 5 };
 
             // Act
             var result = Oppgave1.BinaryReaderSearch(nums, 4);
 
             Assert.Equal(2, result);
         }
+
+
+        [Fact]
+        public void BinarySearch_UnsortedNumbers_ShouldNotFindValue()
+        {
+            // Arrange
+            var nums = new int[] { 10, 9, 5, 4, 11, 12, 6 };
+
+            // Act
+            var result = Oppgave1.BinaryReaderSearch(nums, 9);
+
+            Assert.NotEqual(1, result);
+        }
+
+
     }
 }
