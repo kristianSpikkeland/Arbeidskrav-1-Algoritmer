@@ -65,7 +65,7 @@ namespace KodeAlgo.Oppgave1
                 int mid = left + (right - left) / 2;
 
                 // Returner om midten er lik det vi søker etter og det ikke finnes lavere indekser for det vi søker etter
-                if (array[mid] == target && array[mid -1] != target)
+                if (array[mid] == target && (mid == 0 || array[mid -1] != target))
                 {
                     return mid;
                 }
@@ -80,14 +80,16 @@ namespace KodeAlgo.Oppgave1
                 }
                 
                 
-
-                if (array[left] <= mid)
+                // Hvis verdien av midtindeksen er mindre enn målet vårt
+                if (array[mid] <= target)
                 {
+                    // Da vet vi at målet ligger høyere og vi flytter pekeren left oppover
                     left = mid + 1;
                 }
 
                 else
                 {
+                    // Hvis ikke vet vi at målet ligger lavere og vi flytter pekeren right lavere.
                     right = mid - 1;
                 }
             }
